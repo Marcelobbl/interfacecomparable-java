@@ -7,23 +7,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import entities.Funcionario;
+
 public class Program {
 	
 	public static void main(String[] args) {
 		
-		List<String> list = new ArrayList<>();
+		List<Funcionario> list = new ArrayList<>();
 		String path = "C:\\Users\\User\\Desktop\\Marcelo\\TrabalhoEclipse\\in.txt";
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 			
-			String name = br.readLine();
-			while (name != null) {
-				list.add(name);
-				name = br.readLine();
+			String funcionarioCsv = br.readLine();
+			while (funcionarioCsv != null) {
+				String[] filtro = funcionarioCsv.split(",");
+				list.add(new Funcionario(filtro[0], Double.parseDouble(filtro[1])));
+				funcionarioCsv = br.readLine();
 			}
 			Collections.sort(list);
-			for (String s : list) {
-				System.out.println(s);
+			for (Funcionario funcionario : list) {
+				System.out.println(funcionario.getNome() + ", " + funcionario.getSalario());
 			}
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
